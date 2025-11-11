@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hacker's Login Form — Animated</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="stage">
+    <header class="title-wrap">
+      <h1 class="neon">Hacker's Login Form</h1>
+      <svg class="scribble" viewBox="0 0 200 60" preserveAspectRatio="xMidYMid meet">
+        <path id="scrib" d="M5 40 C40 0, 80 70, 120 30 C150 0, 190 40, 195 20" fill="none" stroke="#ff2d2d" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </header>
+
+    <section class="canvas-area">
+      <!-- hanging lamp -->
+      <div class="lamp-wrap">
+        <div class="cord"></div>
+        <div class="lamp">
+          <div class="lamp-shade"></div>
+          <div class="lamp-glow"></div>
+        </div>
+      </div>
+
+      <!-- scan line and particles -->
+      <div class="scan"></div>
+      <div class="particles" aria-hidden="true"></div>
+
+      <!-- form card -->
+      <div class="login-card">
+        <h2>Welcome</h2>
+        <form id="loginForm" autocomplete="off">
+          <label>
+            <span>Username</span>
+            <input type="text" id="username" name="username" required />
+          </label>
+          <label>
+            <span>Password</span>
+            <input type="password" id="password" name="password" required />
+          </label>
+          <button type="submit" class="login-btn">
+            <span class="btn-text">Login</span>
+            <span class="btn-glow"></span>
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <footer class="hint">Comment "Hacker" for code — Animated edition</footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

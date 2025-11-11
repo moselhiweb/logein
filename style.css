@@ -1,0 +1,246 @@
+:root{
+  --bg:#000;
+  --neon:#ffb347;
+  --muted:#E2D3C1;
+  --accent:#ff2d2d;
+  --card:#1a0b00;
+}
+
+/* reset */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  background: radial-gradient(1200px 800px at 10% 10%, rgba(255,40,40,0.03), transparent 8%),
+              radial-gradient(900px 600px at 90% 80%, rgba(120,0,255,0.02), transparent 6%),
+              var(--bg);
+  color:var(--muted);
+  font-family: Inter, ui-sans-serif, system-ui, "Courier New", monospace;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  direction:ltr;
+  padding:28px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+/* layout */
+.stage{width:100%;max-width:980px}
+.title-wrap{display:flex;align-items:center;gap:18px;justify-content:center;margin-bottom:18px}
+.neon{
+  font-size:34px;
+  color:var(--neon);
+  text-shadow:
+    0 0 6px rgba(255,179,71,0.6),
+    0 0 18px rgba(255,100,0,0.2),
+    0 0 28px rgba(255,50,50,0.08);
+  letter-spacing:1px;
+  transform:translateY(2px);
+  animation: neonFlicker 3s infinite;
+}
+
+/* scribble animated stroke */
+.scribble{width:220px;height:48px; overflow:visible}
+#scrib{filter: drop-shadow(0 0 8px #ff2d2d66)}
+
+/* canvas area contains lamp + card */
+.canvas-area{
+  position:relative;
+  height:520px;
+  border:2px solid rgba(255,255,255,0.06);
+  border-radius:6px;
+  overflow:hidden;
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+  display:flex;
+  align-items:flex-start;
+  justify-content:center;
+  padding-top:28px;
+}
+
+/* scan line */
+.scan{
+  position:absolute;
+  left:0;right:0;
+  top:-20%;
+  height:20%;
+  background: linear-gradient(180deg, transparent, rgba(255,255,255,0.03), transparent);
+  transform:skewY(-6deg);
+  pointer-events:none;
+  animation: scanMove 6s linear infinite;
+  mix-blend-mode:screen;
+}
+
+/* particles small noise */
+.particles{
+  position:absolute; inset:0; pointer-events:none;
+  background-image: radial-gradient(circle at 10% 20%, rgba(255,255,255,0.02) 0 1px, transparent 1px),
+                    radial-gradient(circle at 70% 70%, rgba(255,255,255,0.02) 0 1px, transparent 1px);
+  background-size: 60px 60px, 120px 120px;
+  opacity:0.7;
+  animation: particleDrift 12s linear infinite;
+}
+
+/* lamp */
+.lamp-wrap{position:absolute; top:14px; left:50%; transform:translateX(-50%); z-index:6; pointer-events:none}
+.cord{
+  width:2px;height:90px;background:linear-gradient(#5a1f1f,#2b0b0b);
+  margin:0 auto;
+  transform-origin:top center;
+  animation: cordSway 4s ease-in-out infinite;
+}
+.lamp{
+  width:90px;height:90px; margin:0 auto; position:relative; transform-origin:top center;
+  animation: lampSwing 4s ease-in-out infinite;
+}
+.lamp-shade{
+  width:70px;height:50px;background:linear-gradient(180deg,#f4efe9 0%, #c9bfb0 60%, #a88a6a 100%);
+  border-radius:0 0 12px 12px;
+  margin:0 auto;
+  transform:translateY(10px);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+  position:relative;
+  z-index:3;
+  overflow:hidden;
+}
+.lamp-glow{
+  position:absolute; left:50%; top:38px; transform:translateX(-50%);
+  width:240px;height:160px;border-radius:50%;
+  background: radial-gradient(closest-side, rgba(255,220,150,0.25), rgba(255,80,20,0.03) 35%, transparent 50%);
+  filter:blur(12px);
+  opacity:0.8;
+  pointer-events:none;
+  animation: glowPulse 3.5s ease-in-out infinite;
+}
+
+/* login card */
+.login-card{
+  position:relative;
+  width:320px;
+  padding:28px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-radius:8px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.7), 0 0 40px rgba(255,45,45,0.04) inset;
+  backdrop-filter: blur(2px);
+  z-index:8;
+  transform:translateY(20px);
+  transition:transform .5s cubic-bezier(.2,.9,.2,1);
+}
+.login-card:hover{ transform:translateY(4px) }
+
+.login-card h2{
+  text-align:center;
+  margin-bottom:18px;
+  color:var(--muted);
+  font-size:20px;
+  letter-spacing:0.6px;
+}
+
+/* inputs */
+label{ display:block; font-size:13px; color:#ccc; margin-bottom:12px; }
+label span{display:block; margin-bottom:6px; color:#cfc3b7}
+input{
+  width:100%;
+  padding:10px 12px;
+  border-radius:6px;
+  border:1px solid rgba(255,255,255,0.06);
+  background: rgba(0,0,0,0.34);
+  color:var(--muted);
+  outline:none;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.6) inset;
+  transition: box-shadow .25s, border-color .25s, transform .12s;
+}
+input:focus{
+  border-color: var(--accent);
+  box-shadow: 0 6px 28px rgba(255,45,45,0.12), 0 0 18px rgba(255,45,45,0.06);
+  transform: translateY(-1px);
+}
+
+/* animated underline on focus (pseudo) */
+label{position:relative}
+label::after{
+  content:""; position:absolute; left:12px; right:12px; bottom:-6px; height:2px;
+  background:linear-gradient(90deg, transparent, var(--accent), transparent);
+  transform:scaleX(0); transform-origin:left center; transition:transform .3s ease;
+}
+input:focus + label::after { transform:scaleX(1) }
+
+/* button */
+.login-btn{
+  position:relative;
+  margin-top:6px;
+  width:100%;
+  padding:12px 14px;
+  border-radius:8px;
+  border:none;
+  cursor:pointer;
+  overflow:hidden;
+  background:linear-gradient(90deg, #ff3b3b, #ff6b6b 60%);
+  color:white;
+  font-weight:700;
+  letter-spacing:0.6px;
+  box-shadow: 0 8px 30px rgba(255,40,40,0.12);
+  transition:transform .18s ease, box-shadow .18s ease;
+}
+.login-btn:active{ transform:scale(.98) }
+
+.btn-glow{
+  position:absolute; left:0; right:0; top:0; bottom:0; pointer-events:none;
+  background: radial-gradient(closest-side, rgba(255,255,255,0.18), transparent 30%);
+  opacity:0.18;
+  transform-origin:center;
+  animation: btnPulse 2s infinite;
+}
+
+/* small neon accents */
+.canvas-area::before{
+  content:"";
+  position:absolute; inset:0; border-left:2px solid rgba(255,45,45,0.02); border-right:2px solid rgba(255,45,45,0.02);
+  box-shadow: 0 0 120px rgba(255,45,45,0.02) inset;
+  pointer-events:none;
+}
+
+/* footer hint */
+.hint{margin-top:12px;text-align:center;color:#c9bfb0;opacity:0.8;font-size:13px}
+
+/* keyframes */
+@keyframes neonFlicker{
+  0%, 100% { text-shadow: 0 0 6px rgba(255,179,71,0.5), 0 0 18px rgba(255,100,0,0.16); transform:translateY(0) }
+  5% { text-shadow: none; transform:translateY(2px) scale(0.997) }
+  40% { text-shadow: 0 0 8px rgba(255,179,71,0.7), 0 0 26px rgba(255,80,0,0.22) }
+  70% { text-shadow: 0 0 10px rgba(255,150,50,0.6) }
+}
+
+@keyframes scanMove{
+  0%{ top:-30% }
+  50%{ top:40%}
+  100%{ top:120%}
+}
+
+@keyframes particleDrift{
+  0%{ transform:translateY(0) }
+  50%{ transform:translateY(-6px) translateX(3px) }
+  100%{ transform:translateY(0) }
+}
+
+@keyframes cordSway{
+  0%{ transform:rotate(0deg) }
+  50%{ transform:rotate(2deg) }
+  100%{ transform:rotate(0deg) }
+}
+@keyframes lampSwing{
+  0%{ transform: rotate(-3deg) translateY(0) }
+  25%{ transform: rotate(3deg) translateY(2px) }
+  50%{ transform: rotate(-6deg) translateY(0) }
+  75%{ transform: rotate(3deg) translateY(1px) }
+  100%{ transform: rotate(-3deg) translateY(0) }
+}
+@keyframes glowPulse{
+  0%{ opacity:0.65; filter:blur(10px) transform:scale(1) }
+  50%{ opacity:0.95; filter:blur(6px) transform:scale(1.02) }
+  100%{ opacity:0.65; filter:blur(10px) transform:scale(1) }
+}
+@keyframes btnPulse{
+  0%{ transform:scale(1); opacity:0.18 }
+  50%{ transform:scale(1.06); opacity:0.32 }
+  100%{ transform:scale(1); opacity:0.18 }
+}
